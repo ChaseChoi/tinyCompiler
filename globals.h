@@ -36,7 +36,8 @@ typedef enum
     /* multicharacter tokens */
     ID,NUM,
     /* special symbols */
-    ASSIGN,EQ,LT,PLUS,MINUS,TIMES,OVER,LPAREN,RPAREN,SEMI
+    /* 5. Add support of grater than operator and mod operator */
+    ASSIGN,EQ,LT,PLUS,MINUS,TIMES,OVER,LPAREN,RPAREN,SEMI, GT, MOD
    } TokenType;
 
 extern FILE* source; /* source code text file */

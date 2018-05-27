@@ -134,7 +134,7 @@ TreeNode * write_stmt(void)
 
 TreeNode * exp(void)
 { TreeNode * t = simple_exp();
-  if ((token==LT)||(token==EQ)) {
+  if ((token==LT)||(token==EQ)||(token==GT)) {  /* 5. Add support of greater than symbol */
     TreeNode * p = newExpNode(OpK);
     if (p!=NULL) {
       p->child[0] = t;
@@ -165,7 +165,7 @@ TreeNode * simple_exp(void)
 
 TreeNode * term(void)
 { TreeNode * t = factor();
-  while ((token==TIMES)||(token==OVER))
+  while ((token==TIMES)||(token==OVER)||(token==MOD))  /* 5. Add support of MOD operator */
   { TreeNode * p = newExpNode(OpK);
     if (p!=NULL) {
       p->child[0] = t;

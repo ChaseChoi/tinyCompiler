@@ -106,7 +106,7 @@ static void genExp( TreeNode * tree)
       emitRM("LDC",ac,tree->attr.val,0,"load const");
       if (TraceCode)  emitComment("<- Const") ;
       break; /* ConstK */
-    
+
     case IdK :
       if (TraceCode) emitComment("-> Id") ;
       loc = st_lookup(tree->attr.name);
@@ -139,6 +139,10 @@ static void genExp( TreeNode * tree)
             case OVER :
                emitRO("DIV",ac,ac1,ac,"op /");
                break;
+            /* 5. Add support of MOD operator */
+            case MOD :
+               emitRO("MOD",ac,ac1,ac,"op %%");
+               break;
             case LT :
                emitRO("SUB",ac,ac1,ac,"op <") ;
                emitRM("JLT",ac,2,pc,"br if true") ;
@@ -153,6 +157,14 @@ static void genExp( TreeNode * tree)
                emitRM("LDA",pc,1,pc,"unconditional jmp") ;
                emitRM("LDC",ac,1,ac,"true case") ;
                break;
+            /* 5. Add support of greater than symbol */
+            case GT :
+              emitRO("SUB",ac,ac1,ac,"op >") ;
+              emitRM("JGT",ac,2,pc,"br if true") ;
+              emitRM("LDC",ac,0,ac,"false case") ;
+              emitRM("LDA",pc,1,pc,"unconditional jmp") ;
+              emitRM("LDC",ac,1,ac,"true case") ;
+              break;
             default:
                emitComment("BUG: Unknown operator");
                break;

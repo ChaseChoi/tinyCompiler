@@ -54,7 +54,7 @@ static void ungetNextChar(void)
 /* lookup table of reserved words */
 /* 1. Add While-stmt: WHILE, DO, ENDWHILE */
 /* 3. Add for-stmt: FOR, TO, ENDDO */
-/* 4. Add for-stmt with 'downto': DOWNTO */ 
+/* 4. Add for-stmt with 'downto': DOWNTO */
 static struct
     { char* str;
       TokenType tok;
@@ -138,6 +138,12 @@ TokenType getToken(void)
                break;
              case ';':
                currentToken = SEMI;
+               break;
+             case '>':          /* 5. Add support of greater than operator */
+               currentToken = GT;
+               break;
+             case '%':         /* 5. Add support of mod operator */
+               currentToken = MOD;
                break;
              default:
                currentToken = ERROR;

@@ -28,6 +28,7 @@ void printToken( TokenType token, const char* tokenString )
     case ASSIGN: fprintf(listing,":=\n"); break;
     case LT: fprintf(listing,"<\n"); break;
     case EQ: fprintf(listing,"=\n"); break;
+    case GT: fprintf(listing,">\n"); break;   // 5. Add greater than operator
     case LPAREN: fprintf(listing,"(\n"); break;
     case RPAREN: fprintf(listing,")\n"); break;
     case SEMI: fprintf(listing,";\n"); break;
@@ -35,6 +36,7 @@ void printToken( TokenType token, const char* tokenString )
     case MINUS: fprintf(listing,"-\n"); break;
     case TIMES: fprintf(listing,"*\n"); break;
     case OVER: fprintf(listing,"/\n"); break;
+    case MOD: fprintf(listing,"%%\n"); break;  // 5. Add MOD operator
     case ENDFILE: fprintf(listing,"EOF\n"); break;
     case NUM:
       fprintf(listing,

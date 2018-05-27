@@ -13,9 +13,9 @@
 /* counter for variable memory locations */
 static int location = 0;
 
-/* Procedure traverse is a generic recursive 
+/* Procedure traverse is a generic recursive
  * syntax tree traversal routine:
- * it applies preProc in preorder and postProc 
+ * it applies preProc in preorder and postProc
  * in postorder to tree pointed to by t
  */
 static void traverse( TreeNode * t,
@@ -32,7 +32,7 @@ static void traverse( TreeNode * t,
   }
 }
 
-/* nullProc is a do-nothing procedure to 
+/* nullProc is a do-nothing procedure to
  * generate preorder-only or postorder-only
  * traversals from traverse
  */
@@ -41,9 +41,9 @@ static void nullProc(TreeNode * t)
   else return;
 }
 
-/* Procedure insertNode inserts 
- * identifiers stored in t into 
- * the symbol table 
+/* Procedure insertNode inserts
+ * identifiers stored in t into
+ * the symbol table
  */
 static void insertNode( TreeNode * t)
 { switch (t->nodekind)
@@ -55,8 +55,8 @@ static void insertNode( TreeNode * t)
           /* not yet in table, so treat as new definition */
             st_insert(t->attr.name,t->lineno,location++);
           else
-          /* already in table, so ignore location, 
-             add line number of use only */ 
+          /* already in table, so ignore location,
+             add line number of use only */
             st_insert(t->attr.name,t->lineno,0);
           break;
         default:
@@ -70,8 +70,8 @@ static void insertNode( TreeNode * t)
           /* not yet in table, so treat as new definition */
             st_insert(t->attr.name,t->lineno,location++);
           else
-          /* already in table, so ignore location, 
-             add line number of use only */ 
+          /* already in table, so ignore location,
+             add line number of use only */
             st_insert(t->attr.name,t->lineno,0);
           break;
         default:
@@ -83,7 +83,7 @@ static void insertNode( TreeNode * t)
   }
 }
 
-/* Function buildSymtab constructs the symbol 
+/* Function buildSymtab constructs the symbol
  * table by preorder traversal of the syntax tree
  */
 void buildSymtab(TreeNode * syntaxTree)
@@ -110,7 +110,8 @@ static void checkNode(TreeNode * t)
           if ((t->child[0]->type != Integer) ||
               (t->child[1]->type != Integer))
             typeError(t,"Op applied to non-integer");
-          if ((t->attr.op == EQ) || (t->attr.op == LT))
+          /* 5. Add support of greater than symbol */
+          if ((t->attr.op == EQ) || (t->attr.op == LT) || (t->attr.op == GT))
             t->type = Boolean;
           else
             t->type = Integer;
@@ -151,7 +152,7 @@ static void checkNode(TreeNode * t)
   }
 }
 
-/* Procedure typeCheck performs type checking 
+/* Procedure typeCheck performs type checking
  * by a postorder syntax tree traversal
  */
 void typeCheck(TreeNode * syntaxTree)
