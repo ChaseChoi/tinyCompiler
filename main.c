@@ -39,7 +39,7 @@ FILE * code;
 /* allocate and set tracing flags */
 int EchoSource = FALSE;
 int TraceScan = FALSE;
-int TraceParse = TRUE;
+int TraceParse = FALSE;
 int TraceAnalyze = FALSE;
 int TraceCode = FALSE;
 
@@ -48,11 +48,14 @@ int Error = FALSE;
 int main( int argc, char * argv[] )
 { TreeNode * syntaxTree;
   char pgm[120]; /* source code file name */
-  if (argc != 2)
-    { fprintf(stderr,"usage: %s <filename>\n",argv[0]);
+  if (argc != 3)
+    { fprintf(stderr,"usage: %s [%s] <filename>\n",argv[0], "y|n");
       exit(1);
     }
-  strcpy(pgm,argv[1]) ;
+  if (!strcmp(argv[1], "y")) {
+    TraceParse = TRUE;
+  }
+  strcpy(pgm,argv[2]) ;
   if (strchr (pgm, '.') == NULL)
      strcat(pgm,".tny");
   source = fopen(pgm,"r");

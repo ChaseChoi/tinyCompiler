@@ -86,7 +86,9 @@ TreeNode * statement(void)
 TreeNode * if_stmt(void)
 { TreeNode * t = newStmtNode(IfK);
   match(IF);
+  match(LPAREN);
   if (t!=NULL) t->child[0] = exp();
+  match(RPAREN);
   match(THEN);
   if (t!=NULL) t->child[1] = stmt_sequence();
   if (token==ELSE) {
