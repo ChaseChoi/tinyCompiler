@@ -24,6 +24,7 @@ static TreeNode * exp(void);
 static TreeNode * simple_exp(void);
 static TreeNode * term(void);
 static TreeNode * factor(void);
+static TreeNode * while_stmt(void); // 1. Add while statement declaration
 
 static void syntaxError(char * message)
 { fprintf(listing,"\n>>> ");
@@ -43,8 +44,9 @@ static void match(TokenType expected)
 TreeNode * stmt_sequence(void)
 { TreeNode * t = statement();
   TreeNode * p = t;
+  /* 1. Add 'WHILE' */
   while ((token!=ENDFILE) && (token!=END) &&
-         (token!=ELSE) && (token!=UNTIL))
+         (token!=ELSE) && (token!=UNTIL) && (token!=WHILE) && (token!=ENDWHILE))
   { TreeNode * q;
     match(SEMI);
     q = statement();
@@ -67,6 +69,7 @@ TreeNode * statement(void)
     case ID : t = assign_stmt(); break;
     case READ : t = read_stmt(); break;
     case WRITE : t = write_stmt(); break;
+    case WHILE : t = while_stmt(); break;    // 1. Add While-stmt
     default : syntaxError("unexpected token -> ");
               printToken(token,tokenString);
               token = getToken();
@@ -199,10 +202,29 @@ TreeNode * factor(void)
   return t;
 }
 
+/* 1. ADD WHILE STATEMENT
+ * Description: add while statement
+ * Parameters: void
+ * Return: TreeNode
+ * */
+TreeNode * while_stmt(void) {
+  TreeNode * node = newStmtNode(WhileK);
+  match(WHILE);
+  if (node != NULL) {
+    node -> child[0] = exp();
+  }
+  match(DO);
+  if (node != NULL) {
+    node -> child[1] = stmt_sequence();
+  }
+  match(ENDWHILE);
+  return node;
+}
+
 /****************************************/
 /* the primary function of the parser   */
 /****************************************/
-/* Function parse returns the newly 
+/* Function parse returns the newly
  * constructed syntax tree
  */
 TreeNode * parse(void)

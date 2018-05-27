@@ -9,7 +9,7 @@
 #include "globals.h"
 #include "util.h"
 
-/* Procedure printToken prints a token 
+/* Procedure printToken prints a token
  * and its lexeme to the listing file
  */
 void printToken( TokenType token, const char* tokenString )
@@ -71,7 +71,7 @@ TreeNode * newStmtNode(StmtKind kind)
   return t;
 }
 
-/* Function newExpNode creates a new expression 
+/* Function newExpNode creates a new expression
  * node for syntax tree construction
  */
 TreeNode * newExpNode(ExpKind kind)
@@ -108,7 +108,7 @@ char * copyString(char * s)
 /* Variable indentno is used by printTree to
  * store current number of spaces to indent
  */
-static indentno = 0;
+static int indentno = 0;
 
 /* macros to increase/decrease indentation */
 #define INDENT indentno+=2
@@ -121,7 +121,7 @@ static void printSpaces(void)
     fprintf(listing," ");
 }
 
-/* procedure printTree prints a syntax tree to the 
+/* procedure printTree prints a syntax tree to the
  * listing file using indentation to indicate subtrees
  */
 void printTree( TreeNode * tree )
@@ -145,6 +145,9 @@ void printTree( TreeNode * tree )
           break;
         case WriteK:
           fprintf(listing,"Write\n");
+          break;
+        case WhileK:    // 1. Add while statement
+          fprintf(listing, "While\n");
           break;
         default:
           fprintf(listing,"Unknown ExpNode kind\n");
