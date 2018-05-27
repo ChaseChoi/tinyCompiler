@@ -25,6 +25,8 @@ static TreeNode * simple_exp(void);
 static TreeNode * term(void);
 static TreeNode * factor(void);
 static TreeNode * while_stmt(void); // 1. Add while statement declaration
+static TreeNode * dowhile_stmt(void); // 2. Add do while statment declaration
+static TreeNode * for_stmt(void); // 3. Add for statement declaration
 
 static void syntaxError(char * message)
 { fprintf(listing,"\n>>> ");
@@ -45,8 +47,9 @@ TreeNode * stmt_sequence(void)
 { TreeNode * t = statement();
   TreeNode * p = t;
   /* 1. Add 'WHILE' */
+  /* 3. Add `ENDDO` */
   while ((token!=ENDFILE) && (token!=END) &&
-         (token!=ELSE) && (token!=UNTIL) && (token!=WHILE) && (token!=ENDWHILE))
+         (token!=ELSE) && (token!=UNTIL) && (token!=WHILE) && (token!=ENDWHILE) && (token!=ENDDO))
   { TreeNode * q;
     match(SEMI);
     q = statement();
@@ -70,6 +73,8 @@ TreeNode * statement(void)
     case READ : t = read_stmt(); break;
     case WRITE : t = write_stmt(); break;
     case WHILE : t = while_stmt(); break;    // 1. Add While-stmt
+    case DO : t = dowhile_stmt(); break;   // 2. Add do-while stmt
+    case FOR : t = for_stmt(); break;    // 3. Add for stmt
     default : syntaxError("unexpected token -> ");
               printToken(token,tokenString);
               token = getToken();
@@ -220,6 +225,54 @@ TreeNode * while_stmt(void) {
   match(ENDWHILE);
   return node;
 }
+
+/* 2. ADD DO-WHILE STATEMENT
+ * Description: add do while statement
+ * Parameters: void
+ * Return: TreeNode
+ * */
+TreeNode * dowhile_stmt(void) {
+  TreeNode * node = newStmtNode(DoWhileK);
+  match(DO);
+  if (node != NULL) {
+    node -> child[0] = stmt_sequence();
+  }
+  match(WHILE);
+  match(LPAREN);  // left parenthesis
+  if (node != NULL) {
+    node -> child[1] = exp();
+  }
+  match(RPAREN); // right parenthesis
+  return node;
+}
+/* 3. ADD FOR STATEMENT
+ * Description: add for statement
+ * Parameters: void
+ * Return: TreeNode
+ * */
+
+ TreeNode * for_stmt(void) {
+   TreeNode * node = newStmtNode(ForK);
+   match(FOR);
+   if (node != NULL && token == ID) {
+     node -> attr.name = copyString(tokenString);
+   }
+   match(ID);
+   match(ASSIGN);
+   if (node != NULL) {
+     node -> child[0] = simple_exp();
+   }
+   match(TO);
+   if (node != NULL) {
+     node -> child[1] = simple_exp();
+   }
+   match(DO);
+   if (node != NULL) {
+     node -> child[2] = stmt_sequence();
+   }
+   match(ENDDO);
+   return node;
+ }
 
 /****************************************/
 /* the primary function of the parser   */

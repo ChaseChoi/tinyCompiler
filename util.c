@@ -149,6 +149,12 @@ void printTree( TreeNode * tree )
         case WhileK:    // 1. Add while statement
           fprintf(listing, "While\n");
           break;
+        case DoWhileK:  // 2. Add do-while statement
+          fprintf(listing, "Do-While\n");
+          break;
+        case ForK:  // 3. Add for statement
+          fprintf(listing, "For-loop\n");
+          break;
         default:
           fprintf(listing,"Unknown ExpNode kind\n");
           break;

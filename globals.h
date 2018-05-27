@@ -23,14 +23,15 @@
 #endif
 
 /* MAXRESERVED = the number of reserved words */
-#define MAXRESERVED 11
+#define MAXRESERVED 14
 
 typedef enum
     /* book-keeping tokens */
    {ENDFILE,ERROR,
     /* reserved words */
     /* 1. Add While-stmt: WHILE, DO, ENDWHILE */
-    IF,THEN,ELSE,END,REPEAT,UNTIL,READ,WRITE, WHILE, DO, ENDWHILE,
+    /* 3. Add For-stmt: FOR, TO, ENDDO */
+    IF,THEN,ELSE,END,REPEAT,UNTIL,READ,WRITE, WHILE, DO, ENDWHILE, FOR, TO, ENDDO,
     /* multicharacter tokens */
     ID,NUM,
     /* special symbols */
@@ -49,7 +50,9 @@ extern int lineno; /* source line number for listing */
 
 typedef enum {StmtK,ExpK} NodeKind;
 /* 1. Add 'WhileK' statement kind */
-typedef enum {IfK,RepeatK,AssignK,ReadK,WriteK,WhileK} StmtKind;
+/* 2. Add 'DOWhileK' statement kind */
+/* 3. ADD 'ForK' statement kind */
+typedef enum {IfK,RepeatK,AssignK,ReadK,WriteK,WhileK,DoWhileK,ForK} StmtKind;
 typedef enum {OpK,ConstK,IdK} ExpKind;
 
 /* ExpType is used for type checking */

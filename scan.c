@@ -53,13 +53,14 @@ static void ungetNextChar(void)
 
 /* lookup table of reserved words */
 /* 1. Add While-stmt: WHILE, DO, ENDWHILE */
+/* 3. Add for-stmt: FOR, TO, ENDDO*/
 static struct
     { char* str;
       TokenType tok;
     } reservedWords[MAXRESERVED]
    = {{"if",IF},{"then",THEN},{"else",ELSE},{"end",END},
       {"repeat",REPEAT},{"until",UNTIL},{"read",READ},
-      {"write",WRITE}, {"while", WHILE}, {"do", DO}, {"endwhile", ENDWHILE}};
+      {"write",WRITE}, {"while", WHILE}, {"do", DO}, {"endwhile", ENDWHILE}, {"for", FOR}, {"to", TO}, {"enddo", ENDDO}};
 
 /* lookup an identifier to see if it is a reserved word */
 /* uses linear search */
