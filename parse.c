@@ -89,13 +89,11 @@ TreeNode * if_stmt(void)
   match(LPAREN);
   if (t!=NULL) t->child[0] = exp();
   match(RPAREN);
-  match(THEN);
   if (t!=NULL) t->child[1] = stmt_sequence();
   if (token==ELSE) {
     match(ELSE);
     if (t!=NULL) t->child[2] = stmt_sequence();
   }
-  match(END);
   return t;
 }
 
