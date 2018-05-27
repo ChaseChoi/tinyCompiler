@@ -23,7 +23,7 @@
 #endif
 
 /* MAXRESERVED = the number of reserved words */
-#define MAXRESERVED 14
+#define MAXRESERVED 15
 
 typedef enum
     /* book-keeping tokens */
@@ -31,7 +31,8 @@ typedef enum
     /* reserved words */
     /* 1. Add While-stmt: WHILE, DO, ENDWHILE */
     /* 3. Add For-stmt: FOR, TO, ENDDO */
-    IF,THEN,ELSE,END,REPEAT,UNTIL,READ,WRITE, WHILE, DO, ENDWHILE, FOR, TO, ENDDO,
+    /* 4. Add For-stmt: DOWNTO */
+    IF,THEN,ELSE,END,REPEAT,UNTIL,READ,WRITE, WHILE, DO, ENDWHILE, FOR, TO, ENDDO, DOWNTO,
     /* multicharacter tokens */
     ID,NUM,
     /* special symbols */

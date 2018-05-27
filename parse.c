@@ -262,7 +262,13 @@ TreeNode * dowhile_stmt(void) {
    if (node != NULL) {
      node -> child[0] = simple_exp();
    }
-   match(TO);
+   if (token == TO) {  // increment
+     match(TO);
+   }
+   // 4. Add 'DOWNTO' reserved word
+   if (token == DOWNTO) { // decrement
+     match(DOWNTO);
+   }
    if (node != NULL) {
      node -> child[1] = simple_exp();
    }
